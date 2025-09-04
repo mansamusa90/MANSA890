@@ -223,6 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function getPreviewData() {
+        if (!selectedData) return null;
+
+        const selectedColumnIndexes = Array.from(columnSelect.selectedOptions).map(opt => parseInt(opt.value, 10));
+
+        if (selectedColumnIndexes.length === 0) {
+            return selectedData; // Return all data if no specific columns are selected
+        }
+
+        return selectedData.map(row =>
+            selectedColumnIndexes.map(index => row[index])
+        );
+    }
+
     document.getElementById('export-pdf').addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
         html2canvas(dashboard).then(canvas => {
@@ -267,16 +281,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('export-csv').addEventListener('click', () => {
-        if (selectedData) {
-            exportToCsv('report.csv', selectedData);
+        const dataToExport = getPreviewData();
+        if (dataToExport && dataToExport.length > 0) {
+            exportToCsv('report.csv', dataToExport);
         } else {
             alert('No data to export.');
         }
     });
 
     document.getElementById('export-excel').addEventListener('click', () => {
-        if (workbook) {
-            const wbout = XLSX.write(workbook, {bookType:'xlsx', type: 'binary'});
+        const dataToExport = getPreviewData();
+        if (dataToExport && dataToExport.length > 0) {
+            const newWorkbook = XLSX.utils.book_new();
+            const newSheet = XLSX.utils.aoa_to_sheet(dataToExport);
+            XLSX.utils.book_append_sheet(newWorkbook, newSheet, 'Preview');
+
+            const wbout = XLSX.write(newWorkbook, {bookType:'xlsx', type: 'binary'});
             function s2ab(s) {
                 const buf = new ArrayBuffer(s.length);
                 const view = new Uint8Array(buf);
