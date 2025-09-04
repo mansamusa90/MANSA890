@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Report Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Excel Report Analyzer</h1>
+    </header>
+    <main>
+        <section id="upload-section">
+            <h2>1. Upload Excel Report</h2>
+            <p>Allows users to upload an Excel file for analysis.</p>
+            <input type="file" id="file-upload" accept=".xlsx, .xls">
+            <label for="file-upload">Select Excel Report (.xlsx, .xls)</label>
+        </section>
+        <section id="data-preview-section" class="hidden">
+            <h2>2. Data Preview and Selection</h2>
+            <p>Displays a preview of the uploaded data and allows users to select relevant sheets and columns for analysis.</p>
+            <div id="data-preview-actions">
+                <select id="sheet-select"></select>
+                <select id="column-select" multiple></select>
+            </div>
+            <div id="data-preview-table"></div>
+        </section>
+        <section id="analysis-config-section" class="hidden">
+            <h2>3. Analysis Configuration</h2>
+            <p>Enables users to configure the type of analysis and desired graphical reports.</p>
+            <div class="config-option">
+                <label for="primary-analysis-type">Primary Analysis Type</label>
+                <select id="primary-analysis-type">
+                    <option value="Summary Statistics">Summary Statistics</option>
+                    <option value="Trend Analysis">Trend Analysis</option>
+                    <option value="Comparison">Comparison</option>
+                    <option value="Distribution">Distribution</option>
+                    <option value="Correlation">Correlation</option>
+                </select>
+            </div>
+            <div class="config-option">
+                <label for="desired-graphs">Desired Graphs</label>
+                <select id="desired-graphs" multiple>
+                    <option value="Bar Chart">Bar Chart</option>
+                    <option value="Line Chart">Line Chart</option>
+                    <option value="Pie Chart">Pie Chart</option>
+                    <option value="Scatter Plot">Scatter Plot</option>
+                    <option value="Histogram">Histogram</option>
+                    <option value="Box Plot">Box Plot</option>
+                </select>
+            </div>
+            <div class="config-option">
+                <label for="report-title">Report Title (Optional)</label>
+                <input type="text" id="report-title" placeholder="Enter a title for your report">
+            </div>
+        </section>
+        <section id="report-generation-section" class="hidden">
+            <h2>4. Generate Graphical Report</h2>
+            <p>Processes the selected data and generates interactive graphical reports based on user configuration.</p>
+            <button id="generate-report-btn">Generate Report</button>
+            <div id="report-output" class="hidden">
+                <div id="dashboard">
+                    <div id="graph1"></div>
+                    <div id="graph2"></div>
+                    <div id="summaryInsights">
+                        <h3>Key Insights</h3>
+                        <p></p>
+                    </div>
+                </div>
+                <div id="export-options">
+                    <button id="export-pdf">Export as PDF</button>
+                    <button id="export-png">Export as PNG</button>
+                    <button id="export-jpeg">Export as JPEG</button>
+                    <button id="export-csv">Export Raw Data as CSV</button>
+                    <button id="export-excel">Export Raw Data as Excel</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Excel Report Analyzer</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/chartjs-chart-box-and-violin-plot@3.1.0/build/Chart.BoxPlot.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
